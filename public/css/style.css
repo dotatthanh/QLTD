@@ -1,0 +1,94 @@
+@font-face {
+  font-family: 'SVN';
+  src: url("../fonts/SVN-Gilroy Light.otf") format("truetype"); }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\000036}}
+.bg-login {
+  background-color: #095e9f !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000310}}
+.mt-40 {
+  margin-top: 40px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000314}}
+.mt-70 {
+  margin-top: 70px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000318}}
+.w-100px {
+  width: 100px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000322}}
+.w-60px {
+  width: 60px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000326}}
+.mr-100 {
+  margin-right: 100px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000330}}
+.w-160px {
+  width: 160px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000334}}
+.btn:focus {
+  -webkit-box-shadow: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000338}}
+.bg-dashboard {
+  background: #ebebeb; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000342}}
+.w-130 {
+  width: 130px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000346}}
+.ml-80 {
+  margin-left: 80px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000350}}
+.ml-25 {
+  margin-left: 25px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000354}}
+a {
+  color: #000 !important; }
+
+/*			Admin 			*/
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000362}}
+.title-admin {
+  font-size: 36px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000364}}
+  .title-admin span {
+    font-size: 24px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000369}}
+.select2-container .select2-selection--single {
+  height: 38px !important; }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000371}}
+  .select2-container .select2-selection--single .select2-selection__rendered {
+    line-height: 38px !important; }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000374}}
+  .select2-container .select2-selection--single .select2-selection__arrow {
+    height: 38px !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000378}}
+span.select2.select2-container.select2-container--default.select2-container--below.select2-container--open {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  border-radius: .25rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000388}}
+textarea {
+  resize: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/xampp\/htdocs\/QLTD\/public\/css\/style\.scss}line{font-family:\0000392}}
+.body-admin {
+  color: #000000;
+  font-family: 'SVN';
+  background: url("../images/bg-body.png"); }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,96 @@
+@font-face {
+  font-family: 'SVN';
+  src: url("../fonts/SVN-Gilroy Light.otf") format("truetype"); 
+}
+
+.bg-login {
+    background-color: #095e9f!important;
+}
+
+.mt-40 {
+	margin-top: 40px;
+}
+
+.mt-70 {
+	margin-top: 70px;
+}
+
+.w-100px {
+	width: 100px;
+}
+
+.w-60px {
+	width: 60px;
+}
+
+.mr-100 {
+	margin-right: 100px;
+}
+
+.w-160px {
+	width: 160px;
+}
+
+.btn:focus {
+	-webkit-box-shadow: none;
+}
+
+.bg-dashboard {
+	background: #ebebeb;
+}
+
+.w-130 {
+	width: 130px;
+}
+
+.ml-80 {
+	margin-left: 80px;
+}
+
+.ml-25 {
+	margin-left: 25px;
+}
+
+a {
+	color: #000!important;
+}
+
+
+
+
+/*			Admin 			*/
+.title-admin{
+	font-size: 36px;
+	span{
+		font-size: 24px;
+	}
+}
+
+.select2-container .select2-selection--single{
+	height: 38px!important;
+	.select2-selection__rendered{
+		line-height: 38px!important;
+	}
+	.select2-selection__arrow{
+		height: 38px!important;
+	}
+}
+span.select2.select2-container.select2-container--default.select2-container--below.select2-container--open{
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    border-radius: .25rem;
+}
+
+textarea{
+	resize: none;
+}
+
+.body-admin {
+	color: #000000;
+	font-family: 'SVN';
+	background: url('../images/bg-body.png');
+}
