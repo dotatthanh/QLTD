@@ -149,11 +149,11 @@
                                 @endrole
 
                                 @role('customer')
-                                    <form method="POST" action="" class="pb-2 pl-3 pr-3">
-                                        <p class="mb-0">Tổng tiền <span class="font-weight-bold">1</span> hóa đơn <span class="float-right h5 text-danger font-weight-bold">80 VNĐ</span></p>
-                                        <p class="mb-0 mt-2">Số tiền thu </span> hóa đơn <span class="float-right h5 text-danger font-weight-bold">80 VNĐ</span></p> 
-                                        <p class="mb-0 mt-2">Tiền trả lại <span class="float-right"><span class="h5 text-primary font-weight-bold">0</span> VNĐ</span></p>
-                                    </form>
+                                    <div class="pb-2 pl-3 pr-3">
+                                        <p class="mb-1">Tên KH: <span class="font-weight-bold" id="nameCustomer">{{ $user->name }}</span></p>
+                                        <p class="mb-1">Địa chỉ: <span class="font-weight-bold" id="addressCustomer">{{ $user->address }}</span></p>
+                                        <p class="mb-1">Số điện thoại: <span class="font-weight-bold" id="phoneCustomer">{{ $user->phone }}</span></p>
+                                    </div>
                                 @endrole
                             </div>
                             @role('admin')
@@ -175,9 +175,8 @@
 
                             @role('customer')
                                 <div class="col-6 border-left">
-                                    <p class="mb-1">Tên KH: <span class="font-weight-bold" id="nameCustomer">{{ $user->name }}({{ $user->code }})</span></p>
-                                    <p class="mb-1">Địa chỉ: <span class="font-weight-bold" id="addressCustomer">{{ $user->address }}</span></p>
-                                    <p class="mb-1">Số điện thoại: <span class="font-weight-bold" id="phoneCustomer">{{ $user->phone }}</span></p>
+                                    <p class="mb-1">Mã KH: <span class="font-weight-bold" id="nameCustomer">{{ $user->code }}</span></p>
+                                    <p class="mb-1">Email: <span class="font-weight-bold" id="addressCustomer">{{ $user->email }}</span></p>
                                 </div>
                             @endrole
                         </div>
