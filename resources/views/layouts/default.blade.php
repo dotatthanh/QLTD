@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -33,11 +33,13 @@
                 {{ Auth::user()->name }} <i class="fa fa-angle-down ml-2" aria-hidden="true"></i></button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="{{ route('dashboard') }}">Thu cước</a>
-                    <a class="dropdown-item" href="{{ route('role') }}">QL quyền</a>
+                    @role('admin')
+                        <a class="dropdown-item" href="{{ route('role') }}">QL quyền</a>
+                        <a class="dropdown-item" href="{{ route('staff') }}">QL nhân viên</a>
+                        <a class="dropdown-item" href="{{ route('revenue') }}">QL doanh thu</a>
+                    @endrole
                     <a class="dropdown-item" href="{{ route('customers.index') }}">QL khách hàng</a>
                     <a class="dropdown-item" href="{{ route('bills.index') }}">QL hóa đơn</a>
-                    <a class="dropdown-item" href="{{ route('staff') }}">QL nhân viên</a>
-                    <a class="dropdown-item" href="{{ route('revenue') }}">QL doanh thu</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 

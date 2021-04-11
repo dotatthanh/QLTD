@@ -50,9 +50,11 @@
 				</div>
 			</form>
 
+			@can('add customer')
 			<div class="col-2">
-				<a href="{{ route('customers.create') }}" class="btn btn-success text-white w-100">Thêm khách hàng</a>
+					<a href="{{ route('customers.create') }}" class="btn btn-success text-white w-100">Thêm khách hàng</a>
 			</div>
+			@endcan
 
 			<div class="col-2">
 				<a target="_blank" href="{{ route('export-customer', ['search' => $search]) }}" class="text-white btn btn-success w-100">Xuất excel</a>
@@ -79,11 +81,15 @@
 					<td>{{ $customer->address }}</td>
 					<td class="text-center">
 						<a href="{{ route('import', $customer->id) }}" class="btn btn-success text-white">Nhập số điện</a>
-						<a href="{{ route('customers.edit', $customer->id) }}" class="w-60px btn btn-warning text-white">Sửa</a>
-						<form class="d-inline-block" method="POST" action="{{ route('delete-customer', $customer->id) }}">
-							@csrf
-							<button class="w-60px btn btn-danger" type="submit">Xóa</button>
-						</form>
+						@can('edit customer')
+							<a href="{{ route('customers.edit', $customer->id) }}" class="w-60px btn btn-warning text-white">Sửa</a>
+						@endcan
+						@can('delete customer')
+							<form class="d-inline-block" method="POST" action="{{ route('delete-customer', $customer->id) }}">
+								@csrf
+								<button class="w-60px btn btn-danger" type="submit">Xóa</button>
+							</form>
+						@endcan
 					</td>
 				</tr>
 			@endforeach

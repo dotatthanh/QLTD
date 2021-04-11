@@ -18,19 +18,9 @@
             </div>
 		@endif
 
+		<a href="{{ route('role') }}" type="submit" class="btn btn-success text-white mt-3">Quản lý quyền</a>
 		<form action="{{ route('update-permission', $role->id) }}" method="POST" class="row mt-5">
 			@csrf
-			{{-- <div class="col-12">
-				<h3 class="font-weight-bold">
-					@if ($role->name == 'admin')
-						{{ 'Admin' }}
-					@elseif ($role->name == 'staff')
-						{{ 'Nhân viên' }}
-					@elseif ($role->name == 'customer')
-						{{ 'Khách hàng' }}
-					@endif
-				</h3>
-			</div> --}}
 			<div class="col-4">
 				<h4>Quản lý khách hàng</h3>
 				@foreach ($permissions as $permission)
@@ -51,23 +41,20 @@
 
 			<div class="col-4">
 				<h4>Quản lý hóa đơn</h3>
-				{{-- <form action="" method=""> --}}
-					{{-- @csrf --}}
-					@foreach ($permissions as $permission)
-						@if (strpos($permission->name, 'bill'))
-							<div class="form-check">
-							    <input type="checkbox" name="permissions[{{ $permission->id }}]" class="form-check-input" id="permission{{ $permission->id }}"
-							    	@foreach ($role->permissions as $is_permission)
-							    		@if ($permission->id == $is_permission->id)
-							    			{{ 'checked' }}
-							    		@endif
-							    	@endforeach
-							    >
-							    <label class="form-check-label" for="permission{{ $permission->id }}">{{ $permission->name }}</label>
-							</div>
-						@endif
-					@endforeach
-				{{-- </form> --}}
+				@foreach ($permissions as $permission)
+					@if (strpos($permission->name, 'bill'))
+						<div class="form-check">
+						    <input type="checkbox" name="permissions[{{ $permission->id }}]" class="form-check-input" id="permission{{ $permission->id }}"
+						    	@foreach ($role->permissions as $is_permission)
+						    		@if ($permission->id == $is_permission->id)
+						    			{{ 'checked' }}
+						    		@endif
+						    	@endforeach
+						    >
+						    <label class="form-check-label" for="permission{{ $permission->id }}">{{ $permission->name }}</label>
+						</div>
+					@endif
+				@endforeach
 			</div>
 			<div class="col-12 mt-4">
 				<button type="submit" class="btn btn-success">Lưu lại</button>

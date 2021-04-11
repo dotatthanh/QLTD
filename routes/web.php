@@ -23,14 +23,17 @@ Route::get('/', function () {
 
 Route::get('/dashboard', 'App\Http\Controllers\BillController@dashboard')->middleware(['auth'])->name('dashboard');
 
-
-Route::resource('customers', CustomerController::class)->middleware(['auth']);
-
-
-Route::get('/change-password', 'App\Http\Controllers\UserController@changePassword')->name('change-password')->middleware(['auth']);
-
-
-Route::get('/test', 'App\Http\Controllers\UserController@test');
+Route::group(['middleware' => ['role:admin|staff']], function () {
+	Route::resource('bills', BillController::class)->middleware(['auth']);
+	Route::get('/customer/{id}/import', 'App\Http\Controllers\BillController@import')->name('import')->middleware(['auth']);
+	Route::post('/import-power-number/{id}', 'App\Http\Controllers\BillController@importPowerNumber')->name('import-power-number')->middleware(['auth']);
+	Route::resource('customers', CustomerController::class)->middleware(['auth']);
+	Route::get('/export-customer', 'App\Http\Controllers\CustomerController@exportCustomer')->name('export-customer')->middleware(['auth']);
+	Route::get('/export-bill', 'App\Http\Controllers\BillController@exportBill')->name('export-bill')->middleware(['auth']);
+	Route::get('/export-revenue', 'App\Http\Controllers\RevenueController@exportRevenue')->name('export-revenue')->middleware(['auth']);
+	Route::post('/print', 'App\Http\Controllers\BillController@print')->name('print')->middleware(['auth']);
+	Route::post('/delete-customer/{id}', 'App\Http\Controllers\CustomerController@deleteCustomer')->name('delete-customer')->middleware(['auth']);
+});
 
 Route::group(['middleware' => ['role:admin']], function () {
 	Route::get('/staff', 'App\Http\Controllers\UserController@staff')->name('staff')->middleware(['auth']);
@@ -39,24 +42,28 @@ Route::group(['middleware' => ['role:admin']], function () {
 	Route::get('/role', 'App\Http\Controllers\UserController@role')->name('role')->middleware(['auth']);
 	Route::get('/role/{id}/edit', 'App\Http\Controllers\UserController@editPermission')->name('edit-permission')->middleware(['auth']);
 	Route::post('/role/{id}/update', 'App\Http\Controllers\UserController@updatePermission')->name('update-permission')->middleware(['auth']);
-});
-
-Route::group(['middleware' => ['can:delete customer']], function () {
-	Route::post('/delete-customer/{id}', 'App\Http\Controllers\CustomerController@deleteCustomer')->name('delete-customer')->middleware(['auth']);
+	Route::get('/revenue', 'App\Http\Controllers\RevenueController@revenue')->name('revenue')->middleware(['auth']);
 });
 
 
-Route::get('/export-customer', 'App\Http\Controllers\CustomerController@exportCustomer')->name('export-customer')->middleware(['auth']);
-Route::get('/export-bill', 'App\Http\Controllers\BillController@exportBill')->name('export-bill')->middleware(['auth']);
 
 
-Route::resource('bills', BillController::class)->middleware(['auth']);
-Route::get('/customer/{id}/import', 'App\Http\Controllers\BillController@import')->name('import')->middleware(['auth']);
-Route::post('/import-power-number/{id}', 'App\Http\Controllers\BillController@importPowerNumber')->name('import-power-number')->middleware(['auth']);
-Route::post('/print', 'App\Http\Controllers\BillController@print')->name('print')->middleware(['auth']);
 
 
-Route::get('/revenue', 'App\Http\Controllers\RevenueController@revenue')->name('revenue')->middleware(['auth']);
-Route::get('/export-revenue', 'App\Http\Controllers\RevenueController@exportRevenue')->name('export-revenue')->middleware(['auth']);
+Route::get('/change-password', 'App\Http\Controllers\UserController@changePassword')->name('change-password')->middleware(['auth']);
+Route::post('/change-password', 'App\Http\Controllers\UserController@changePasswordStore')->name('change-password-store')->middleware(['auth']);
+
+
+// Route::get('/test', 'App\Http\Controllers\UserController@test');
+
+
+// Route::group(['middleware' => ['can:delete customer']], function () {
+// });
+
+
+
+
+
+
 
 require __DIR__.'/auth.php';

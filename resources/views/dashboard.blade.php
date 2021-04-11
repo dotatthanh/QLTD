@@ -32,6 +32,15 @@
                     <button class="btn text-white dropdown-toggle w-160px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ Auth::user()->name }} <i class="fa fa-angle-down ml-2" aria-hidden="true"></i></button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ route('dashboard') }}">Thu cước</a>
+                        @role('admin')
+                            <a class="dropdown-item" href="{{ route('role') }}">QL quyền</a>
+                            <a class="dropdown-item" href="{{ route('staff') }}">QL nhân viên</a>
+                            <a class="dropdown-item" href="{{ route('revenue') }}">QL doanh thu</a>
+                        @endrole
+                        <a class="dropdown-item" href="{{ route('customers.index') }}">QL khách hàng</a>
+                        <a class="dropdown-item" href="{{ route('bills.index') }}">QL hóa đơn</a>
+                        <a class="dropdown-item" href="{{ route('change-password-store') }}">Đổi mật khẩu</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -74,17 +83,40 @@
                             </form>
                         @endrole
 
-                        @role('customer')
-                            <form method="POST" action="" class="form-group text-secondary mb-0 pb-2 pt-3 pl-3 pr-3">
+                        @role('staff')
+                            <form method="GET" action="{{ route('dashboard') }}" class="form-group text-secondary mb-0 pb-2 pt-3 pl-3 pr-3">
+                                <input type="radio" name="key" value="code" class="" checked> Tìm Mã KH
+                                <input type="radio" name="key" value="name" class="ml-3" {{ $key == 'name' ? 'checked' : '' }}> Tìm Tên KH
+                                <input type="radio" name="key" value="phone" class="ml-3" {{ $key == 'phone' ? 'checked' : '' }}> Tìm Số điện thoại
+                                <div class="row mt-2">
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" name="search">
+                                    </div>
+                                    <div class="col-3">
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form method="POST" action="{{ route('print') }}" class="pt-2 pb-2 pl-3 pr-3">
                                 @csrf
+                                <input type="number" name="proceeds" hidden>
+                                <input type="number" name="id" hidden>
+                                <button onfocus="selectBill()" type="submit" class="btn btn-primary" id="buttonPrint"><i class="fa fa-print" aria-hidden="true"></i> In giấy biên nhận</button>
+                                <a href="{{ route('bills.index') }}" class="float-right mt-2"><i class="fa fa-history" aria-hidden="true"></i> Lịch sử thu cước</a>
+                            </form>
+                        @endrole
+
+                        @role('customer')
+                            <form method="GET" action="{{ route('dashboard') }}" class="form-group text-secondary mb-0 pb-2 pt-3 pl-3 pr-3">
                                 <div class="row mt-2">
                                     <div class="col-4">
                                         <label class="font-weight-bold text-black">Mã hóa đơn</label>
-                                        <input type="text" class="form-control" name="" placeholder="Mã hóa đơn">
+                                        <input type="text" class="form-control" name="code" placeholder="Mã hóa đơn">
                                     </div>
                                     <div class="col-8">
                                         <label class="font-weight-bold text-black">Kỳ thu</label>
-                                        <input type="month" class="form-control w-100">
+                                        <input type="month" name="period" class="form-control w-100">
                                     </div>
                                 </div>
                                 <div class="row mt-2 justify-content-end">
@@ -101,15 +133,14 @@
                     <div class="bg-white h-100">
                         <div class="row pt-3">
                             <div class="col-6">
-                                {{-- @role('staff')
-                                    <form method="POST" action="" class="pb-2 pl-3 pr-3">
-                                        <p class="mb-0">Tổng tiền <span class="font-weight-bold">1</span> hóa đơn <span class="float-right h5 text-danger font-weight-bold" id="totalBill"></span></p>
-                                        <p class="mb-0 mt-2">Số tiền thu <input min="0" type="number" class="w-130 d-inline-block ml-80 form-control" name=""></p> 
-                                        <p class="mb-0">Tiền trả lại <span class="float-right"><span class="h5 text-primary font-weight-bold">0</span> VNĐ</span></p>
-                                    </form>
-                                @endrole --}}
-
                                 @role('admin')
+                                    <div class="pb-2 pl-3 pr-3">
+                                        <p class="mb-0">Tổng tiền hóa đơn <span class="h5 text-danger font-weight-bold float-right">VNĐ</span><span class="float-right mr-1 h5 text-danger font-weight-bold" id="totalBill"></span></p>
+                                        <p class="mb-0 mt-2">Số tiền thu <input min="0" type="number" id="proceeds" class="w-130 d-inline-block ml-80 form-control" onkeyup="importProceeds(this.value)"></p> 
+                                        <p class="mb-0 mt-1">Tiền trả lại <span class="float-right"><span class="h5 text-primary font-weight-bold" id="amountReturnBill">0</span> VNĐ</span></p>
+                                    </div>
+                                @endrole
+                                @role('staff')
                                     <div class="pb-2 pl-3 pr-3">
                                         <p class="mb-0">Tổng tiền hóa đơn <span class="h5 text-danger font-weight-bold float-right">VNĐ</span><span class="float-right mr-1 h5 text-danger font-weight-bold" id="totalBill"></span></p>
                                         <p class="mb-0 mt-2">Số tiền thu <input min="0" type="number" id="proceeds" class="w-130 d-inline-block ml-80 form-control" onkeyup="importProceeds(this.value)"></p> 
@@ -124,15 +155,31 @@
                                         <p class="mb-0 mt-2">Tiền trả lại <span class="float-right"><span class="h5 text-primary font-weight-bold">0</span> VNĐ</span></p>
                                     </form>
                                 @endrole
+                            </div>
+                            @role('admin')
+                                <div class="col-6 border-left">
+                                    <p class="mb-1">Tên KH: <span class="font-weight-bold" id="nameCustomer"></span></p>
+                                    <p class="mb-1">Địa chỉ: <span class="font-weight-bold" id="addressCustomer"></span></p>
+                                    <p class="mb-1">Số điện thoại: <span class="font-weight-bold" id="phoneCustomer"></span></p>
+                                    <p class="mb-1">Nợ cước: <span class="font-weight-bold" id="debitCustomer"></span></p>
+                                </div>
+                            @endrole
+                            @role('staff')
+                                <div class="col-6 border-left">
+                                    <p class="mb-1">Tên KH: <span class="font-weight-bold" id="nameCustomer"></span></p>
+                                    <p class="mb-1">Địa chỉ: <span class="font-weight-bold" id="addressCustomer"></span></p>
+                                    <p class="mb-1">Số điện thoại: <span class="font-weight-bold" id="phoneCustomer"></span></p>
+                                    <p class="mb-1">Nợ cước: <span class="font-weight-bold" id="debitCustomer"></span></p>
+                                </div>
+                            @endrole
 
-                            </div>
-                            <div class="col-6 border-left">
-                                <p class="mb-1">Tên KH: <span class="font-weight-bold" id="nameCustomer"></span></p>
-                                <p class="mb-1">Địa chỉ: <span class="font-weight-bold" id="addressCustomer"></span></p>
-                                <p class="mb-1">Số điện thoại: <span class="font-weight-bold" id="phoneCustomer"></span></p>
-                                {{-- <p class="mb-1" id="debitCustomer">Nợ cước: <span class="font-weight-bold">8000</span> VNĐ</p> --}}
-                                <p class="mb-1">Nợ cước: <span class="font-weight-bold" id="debitCustomer"></span></p>
-                            </div>
+                            @role('customer')
+                                <div class="col-6 border-left">
+                                    <p class="mb-1">Tên KH: <span class="font-weight-bold" id="nameCustomer">{{ $user->name }}({{ $user->code }})</span></p>
+                                    <p class="mb-1">Địa chỉ: <span class="font-weight-bold" id="addressCustomer">{{ $user->address }}</span></p>
+                                    <p class="mb-1">Số điện thoại: <span class="font-weight-bold" id="phoneCustomer">{{ $user->phone }}</span></p>
+                                </div>
+                            @endrole
                         </div>
                     </div>
                 </div>

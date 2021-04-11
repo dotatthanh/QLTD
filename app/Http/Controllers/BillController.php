@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Bill;
 use DB;
+use Auth;
 use Illuminate\Support\Collection;
 use DateTime;
 use App\Exports\BillExport;
@@ -261,12 +262,27 @@ class BillController extends Controller
                 $notification = 'Khách hàng không tồn tại.';
             }
         }
-        
+
+        if (Auth::user()->hasRole('customer')) {
+            $id = Auth::id();
+            $bills = Bill::with('user')->where('customer_id', $id)->paginate(10);
+            
+            if ($request->code) {
+                $bills = Bill::with('user')->where('customer_id', $id)->where('code', $request->code)->paginate(10);
+            }
+            elseif ($request->period) {
+                $period = $request->period.'-01';
+                $bills = Bill::with('user')->where('customer_id', $id)->where('period', $period)->paginate(10);
+            }
+        }
 
         $data = [
+            'user' => Auth::user(),
             'bills' => $bills,
             'search' => $request->search,
             'key' => $request->key,
+            'code' => $request->code,
+            'period' => $request->period,
             'notification' => $notification,
         ];
 

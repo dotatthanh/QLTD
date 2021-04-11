@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
 	<div class="container mb-5">
-		<h1 class="title-admin mt-5">QUẢN LÝ VAI TRÒ</h1>
+		<h1 class="title-admin mt-5">QUẢN LÝ QUYỀN</h1>
 		
 		<table class="table table-bordered table-striped mt-3">
 			<tr class="text-center">

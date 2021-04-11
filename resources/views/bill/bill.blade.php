@@ -73,12 +73,16 @@
 						{!! $bill->status == 0 ? '<label class="bg-warning text-white p-2 rounded">Chưa thu</label>' : '<label class="bg-success text-white p-2 rounded">Đã thu</label>' !!}
 					</td>
 					<td class="text-center">
-						<a href="{{ route('bills.edit', $bill->id) }}" class="w-60px btn btn-warning text-white">Sửa</a>
-						<form class="d-inline-block" method="POST" action="{{ route('bills.destroy', $bill->id) }}">
-							@csrf
-							@method('DELETE')
-							<button class="w-60px btn btn-danger" type="submit">Xóa</button>
-						</form>
+						@can('edit bill')
+							<a href="{{ route('bills.edit', $bill->id) }}" class="w-60px btn btn-warning text-white">Sửa</a>
+						@endcan
+						@can('delete bill')
+							<form class="d-inline-block" method="POST" action="{{ route('bills.destroy', $bill->id) }}">
+								@csrf
+								@method('DELETE')
+								<button class="w-60px btn btn-danger" type="submit">Xóa</button>
+							</form>
+						@endcan
 					</td>
 				</tr>
 			@endforeach

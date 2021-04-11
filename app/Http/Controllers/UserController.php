@@ -6,12 +6,54 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Auth;
+use Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function changePassword()
     {
         return view('auth.change-password');
+    }
+
+    public function changePasswordStore(Request $request)
+    {
+        $rules = [
+            'password_old' => 'required|string|min:8',
+            'password' => 'required|string|confirmed|min:8',
+            'password_confirmation' => 'required|string|min:8',
+        ];
+
+        $messages = [
+            'password_old.required' => 'Mật khẩu cũ là trường bắt buộc.',
+            'password_confirmation.required' => 'Xác nhận mật khẩu là trường bắt buộc.',
+            'password_old.string' => 'Mật khẩu cũ không được chứa các ký tự đặc biệt.',
+            'password_confirmation.string' => 'Xác nhận mật khẩu không được chứa các ký tự đặc biệt.',
+            'password.required' => 'Mật khẩu là trường bắt buộc.',
+            'password.string' => 'Mật khẩu không được chứa các ký tự đặc biệt.',
+            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
+            'password.min' => 'Mật khẩu phải ít nhất 8 ký tự.',
+            'password_old.min' => 'Mật khẩu cũ phải ít nhất 8 ký tự.',
+            'password_confirmation.min' => 'Xác nhận mật khẩu phải ít nhất 8 ký tự.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = Auth::user();
+        if (Hash::check($request->password_old, $user->password)) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+            return redirect()->back()->with('notificationSuccess', 'Đổi mật khẩu thành công!');
+        }
+        else {
+            return redirect()->back()->with('notificationFail', 'Mật khẩu cũ không đúng!');
+        }
     }
 
     public function role()
@@ -42,7 +84,7 @@ class UserController extends Controller
 
         $role->permissions()->detach();
 
-        if ($request->permission) {
+        if ($request->permissions) {
             foreach ($request->permissions as $permission => $value) {
                 $permission = Permission::find($permission);
                 $role->givePermissionTo($permission);
@@ -81,8 +123,8 @@ class UserController extends Controller
         return redirect()->route('staff')->with('notificationDelete', 'Xóa thành công!');
     }
 
-    public function test()
-    {
+    // public function test()
+    // {
         // $role_admin = Role::where('name', 'admin')->first();
         // $role_staff = Role::where('name', 'staff')->first();
 
@@ -105,5 +147,5 @@ class UserController extends Controller
         // $role_staff->givePermissionTo($permission_add_bill);
         // $role_staff->givePermissionTo($permission_edit_bill);
 
-    }
+    // }
 }

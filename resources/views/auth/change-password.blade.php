@@ -5,24 +5,41 @@
 		
 		<div class="row justify-content-center">
 			<div class="col-7">
-				<form action="" method="POST" class="mt-3">
+				@if ($errors->any())
+		            @foreach ($errors->all() as $error)
+		                <span class="text-danger d-block mt-2">{{ $error }}</span>
+		            @endforeach
+				@endif
+				@if(session('notificationSuccess'))
+					<div class="alert alert-success text-center mt-3" role="alert">
+		                <button type="button" class="close d-block" data-dismiss="alert" aria-hidden="true">&times;</button>
+		                {{ session('notificationSuccess') }}
+		            </div>
+				@endif
+				@if(session('notificationFail'))
+					<div class="alert alert-danger text-center mt-3" role="alert">
+		                <button type="button" class="close d-block" data-dismiss="alert" aria-hidden="true">&times;</button>
+		                {{ session('notificationFail') }}
+		            </div>
+				@endif
+				<form action="{{ route('change-password-store') }}" method="POST" class="mt-3">
 					@csrf
 					<div class="form-group row">
-					    <label for="password" class="col-sm-3 col-form-label">Mật khẩu hiện tại</label>
+					    <label for="password" class="col-sm-3 col-form-label">Mật khẩu cũ</label>
 					    <div class="col-sm-9">
-					      <input type="password" class="form-control" id="password" placeholder="Mật khẩu hiện tại">
+					      <input type="password" class="form-control" name="password_old" id="password" placeholder="Mật khẩu cũ">
 					    </div>
 					</div>
 					<div class="form-group row">
 					    <label for="passwordNew" class="col-sm-3 col-form-label">Mật khẩu mới</label>
 					    <div class="col-sm-9">
-					      <input type="password" class="form-control" id="passwordNew" placeholder="Mật khẩu mới">
+					      <input type="password" class="form-control" name="password" id="passwordNew" placeholder="Mật khẩu mới">
 					    </div>
 					</div>
 					<div class="form-group row">
 					    <label for="passwordConfirm" class="col-sm-3 col-form-label">Nhập lại mật khẩu</label>
 					    <div class="col-sm-9">
-					      <input type="password" class="form-control" id="passwordConfirm" placeholder="Nhập lại mật khẩu">
+					      <input type="password" class="form-control" name="password_confirmation" id="passwordConfirm" placeholder="Nhập lại mật khẩu">
 					    </div>
 					</div>
 					<div class="text-center">
