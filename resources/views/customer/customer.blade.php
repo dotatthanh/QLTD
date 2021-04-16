@@ -105,7 +105,7 @@
 			@csrf
 			<div class="col-3">
 				<div class="form-group">
-					<input type="file" class="form-control-file" name="file">
+					<input required type="file" class="form-control-file" name="file">
 				</div>
 			</div>
 			<div class="col-3">
@@ -120,7 +120,7 @@
 			@csrf
 			<div class="col-3">
 				<div class="form-group">
-					<input type="file" class="form-control-file" name="file">
+					<input required type="file" class="form-control-file" name="file">
 				</div>
 			</div>
 			<div class="col-3">
