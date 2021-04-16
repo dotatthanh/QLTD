@@ -9,6 +9,10 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Exports\CustomerExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CustomerImport;
+use App\Imports\PowerNumberImport;
+use App\Exports\FormImportCustomerExport;
+use App\Exports\FormImportPoweNumberCustomerExport;
 
 class CustomerController extends Controller
 {
@@ -211,5 +215,88 @@ class CustomerController extends Controller
 
     public function exportCustomer(Request $request) {
         return Excel::download(new CustomerExport($request->all()), 'Khach_hang.xlsx');
+    }
+
+    public function importCustomer(Request $request) {
+        $import = new CustomerImport();
+        $import->import($request->file('file'), null, \Maatwebsite\Excel\Excel::XLSX);
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
+
+        return back()->with('notificationImport', 'Nhập danh sách khách hàng thành công.');
+    }
+
+    public function exportFormImportCustomer() {
+        return Excel::download(new FormImportCustomerExport(), 'nhap_khach_hang.xlsx');
+    }
+
+    public function exportFormImportPowerNumberCustomer() {
+        return Excel::download(new FormImportPoweNumberCustomerExport(), 'nhap_so_dien_khach_hang.xlsx');
+    }
+
+    public function importPowerNumberCustomer(Request $request) {
+        $import = new PowerNumberImport();
+        $import->import($request->file('file'), null, \Maatwebsite\Excel\Excel::XLSX);
+
+        // foreach ($import->data as $key => $data) {
+        //     DB::beginTransaction();
+        //     try {
+        //         $explode = explode("/", $data['period']);
+        //         $period = $explode[1].'-'.$explode[0].'-01';
+
+        //         $customer = User::where('code', $data['code'])->first();
+        //         if ($customer) {
+        //             $bill = Bill::where('customer_id', $customer->id)->where('period', $period)->first();
+        //             if ($bill) {
+        //                 return redirect()->route('customers.index')->with('notificationImportFail', 'Kỳ thu đã nhập số điện!');
+        //             }
+        //             else {
+        //                 if ($data['power_number'] <= 50) {
+        //                     $price = $data['power_number'] * 1678;
+        //                 }
+        //                 elseif ($data['power_number'] >= 51 && $data['power_number'] <= 100) {
+        //                     $price = 50 * 1678 + ($data['power_number'] - 50) * 1734;
+        //                 }
+        //                 elseif ($data['power_number'] >= 101 && $data['power_number'] <= 200) {
+        //                     $price = 50 * 1678 + 50 * 1734 + ($data['power_number'] -100) * 2014;
+        //                 }
+        //                 elseif ($data['power_number'] >= 201 && $data['power_number'] <= 300) {
+        //                     $price = 50 * 1678 + 50 * 1734 + 100 * 2014 + ($data['power_number'] - 200) * 2536;
+        //                 }
+        //                 elseif ($data['power_number'] >= 301 && $data['power_number'] <= 400) {
+        //                     $price = 50 * 1678 + 50 * 1734 + 100 * 2014 + 100 * 2536 + ($data['power_number'] - 300) * 2834;
+        //                 }
+        //                 elseif ($data['power_number'] >= 401) {
+        //                     $price = 50 * 1678 + 50 * 1734 + 100 * 2014 + 100 * 2536 + 100 * 2834 + ($data['power_number'] - 400) * 2927;
+        //                 }
+
+        //                 Bill::create([
+        //                     'customer_id' => $customer->id,
+        //                     'code' => 'HD'.strval(Bill::count()+1),
+        //                     'power_number' => $data['power_number'],
+        //                     'price' => $price,
+        //                     'debit' => $price,
+        //                     'period' => $period,
+        //                     'status' => Bill::UNPAID,
+        //                 ]);
+        //             }
+        //         }
+
+        //         DB::commit();
+        //         return redirect()->route('customers.index')->with('notificationImport', 'Nhập danh sách số điện cho khách hàng thành công!');
+        //     } catch (Exception $e) {
+        //         DB::rollBack();
+        //         throw new Exception($e->getMessage());
+        //         return redirect()->route('customers.index')->with('notificationImport', 'Nhập danh sách số điện cho khách hàng thất bại!');
+        //     }
+        // }
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
+
+        return back()->with('notificationImport', 'Nhập danh sách số điện cho khách hàng thành công.');
     }
 }

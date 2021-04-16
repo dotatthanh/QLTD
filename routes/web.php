@@ -29,9 +29,13 @@ Route::group(['middleware' => ['role:admin|staff']], function () {
 	Route::post('/import-power-number/{id}', 'App\Http\Controllers\BillController@importPowerNumber')->name('import-power-number')->middleware(['auth']);
 	Route::resource('customers', CustomerController::class)->middleware(['auth']);
 	Route::get('/export-customer', 'App\Http\Controllers\CustomerController@exportCustomer')->name('export-customer')->middleware(['auth']);
+	Route::get('/export-form-import-customer', 'App\Http\Controllers\CustomerController@exportFormImportCustomer')->name('export-form-import-customer')->middleware(['auth']);
+	Route::get('/export-form-import-power-number-customer', 'App\Http\Controllers\CustomerController@exportFormImportPowerNumberCustomer')->name('export-form-import-power-number-customer')->middleware(['auth']);
 	Route::get('/export-bill', 'App\Http\Controllers\BillController@exportBill')->name('export-bill')->middleware(['auth']);
 	Route::get('/export-revenue', 'App\Http\Controllers\RevenueController@exportRevenue')->name('export-revenue')->middleware(['auth']);
 	Route::post('/print', 'App\Http\Controllers\BillController@print')->name('print')->middleware(['auth']);
+	Route::post('/import-customer', 'App\Http\Controllers\CustomerController@importCustomer')->name('import-customer')->middleware(['auth']);
+	Route::post('/import-power-number-customer', 'App\Http\Controllers\CustomerController@importPowerNumberCustomer')->name('import-power-number-customer')->middleware(['auth']);
 	Route::post('/delete-customer/{id}', 'App\Http\Controllers\CustomerController@deleteCustomer')->name('delete-customer')->middleware(['auth']);
 });
 

@@ -38,8 +38,11 @@
                         <a class="dropdown-item" href="{{ route('staff') }}">QL nhân viên</a>
                         <a class="dropdown-item" href="{{ route('revenue') }}">QL doanh thu</a>
                     @endrole
-                    <a class="dropdown-item" href="{{ route('customers.index') }}">QL khách hàng</a>
-                    <a class="dropdown-item" href="{{ route('bills.index') }}">QL hóa đơn</a>
+                    @hasanyrole('admin|staff')
+                        <a class="dropdown-item" href="{{ route('customers.index') }}">QL khách hàng</a>
+                        <a class="dropdown-item" href="{{ route('bills.index') }}">QL hóa đơn</a>
+                    @endhasanyrole
+                    <a class="dropdown-item" href="{{ route('change-password-store') }}">Đổi mật khẩu</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
