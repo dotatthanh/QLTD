@@ -201,17 +201,19 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        
-    }
-
-    public function deleteCustomer($id)
-    {
-        User::findOrFail($id)->update([
-            'status' => -1,
-        ]);
+        User::destroy($id);
 
         return redirect()->route('customers.index')->with('notificationDelete', 'Xóa khách hàng thành công!');
     }
+
+    // public function deleteCustomer($id)
+    // {
+    //     User::findOrFail($id)->update([
+    //         'status' => -1,
+    //     ]);
+
+    //     return redirect()->route('customers.index')->with('notificationDelete', 'Xóa khách hàng thành công!');
+    // }
 
     public function exportCustomer(Request $request) {
         return Excel::download(new CustomerExport($request->all()), 'Khach_hang.xlsx');

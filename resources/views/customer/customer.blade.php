@@ -155,8 +155,10 @@
 							<a href="{{ route('customers.edit', $customer->id) }}" class="w-60px btn btn-warning text-white">Sửa</a>
 						@endcan
 						@can('delete customer')
-							<form class="d-inline-block" method="POST" action="{{ route('delete-customer', $customer->id) }}">
+							{{-- <form class="d-inline-block" method="POST" action="{{ route('delete-customer', $customer->id) }}"> --}}
+							<form class="d-inline-block" method="POST" action="{{ route('customers.destroy', $customer->id) }}">
 								@csrf
+								@method('DELETE')
 								<button class="w-60px btn btn-danger" type="submit">Xóa</button>
 							</form>
 						@endcan

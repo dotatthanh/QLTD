@@ -36,7 +36,7 @@ Route::group(['middleware' => ['role:admin|staff']], function () {
 	Route::post('/print', 'App\Http\Controllers\BillController@print')->name('print')->middleware(['auth']);
 	Route::post('/import-customer', 'App\Http\Controllers\CustomerController@importCustomer')->name('import-customer')->middleware(['auth']);
 	Route::post('/import-power-number-customer', 'App\Http\Controllers\CustomerController@importPowerNumberCustomer')->name('import-power-number-customer')->middleware(['auth']);
-	Route::post('/delete-customer/{id}', 'App\Http\Controllers\CustomerController@deleteCustomer')->name('delete-customer')->middleware(['auth']);
+	// Route::post('/delete-customer/{id}', 'App\Http\Controllers\CustomerController@deleteCustomer')->name('delete-customer')->middleware(['auth']);
 });
 
 Route::group(['middleware' => ['role:admin']], function () {
