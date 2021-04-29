@@ -61,8 +61,8 @@
 				<tr>
 					<td class="text-center">{{ $stt++ }}</td>
 					<td>{{ $bill->code }}</td>
-					<td>{{ $bill->user->code }}</td>
-					<td>{{ $bill->user->name }}</td>
+					<td>{{ $bill->user ? $bill->user->code : 'KH đã xóa' }}</td>
+					<td>{{ $bill->user ? $bill->user->name : 'KH đã xóa' }}</td>
 					<td class="text-right">{{ $bill->power_number }}</td>
 					<td class="text-right">{{ $bill->price }}</td>
 					<td class="text-right">{{ $bill->proceeds }}</td>

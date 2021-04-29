@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
 	<div class="container">
-		<h1 class="title-admin mt-5">DOANH THU</h1>
+		<h1 class="title-admin mt-5">QUẢN LÝ DOANH THU</h1>
 		
 		<form class="row mt-5">
 			<div class="col-2">

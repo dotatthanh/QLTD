@@ -6,7 +6,7 @@
 		<table class="table table-bordered table-striped mt-3">
 			<tr class="text-center">
 				<th>STT</th>
-				<th>Tên khách hàng</th>
+				<th>Tên vai trò</th>
 				<th>Thao tác</th>
 			</tr>
 			@php ($stt = 1)
